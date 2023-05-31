@@ -2,34 +2,84 @@ import { useState } from "react";
 import "./App.css";
 import { List } from "./components/List";
 import { InputButton } from "./components/inputButton";
-
-const InitialLists = [{ id: 1, title: "json-server", status: false }];
+import { useEffect } from "react";
 
 function App() {
-  const [Todos, setTodos] = useState(InitialLists);
+  const [Todos, setTodos] = useState([]);
 
-  const AddTodo = (value) => {
-    const todo = { id: Todos.length + 1, title: value, status: false };
+  const getTodos = async () => {
+    let response = await fetch(`http://localhost:3000/todos`);
+    let data = await response.json();
 
-    setTodos([...Todos, todo]);
+    setTodos([...data]);
+    console.log(data);
   };
 
-  const ChangeStatus = (id) => {
-    const arr = Todos.map((el) => {
-      if (el.id == id) {
-        el.status = !el.status;
-      }
-      return el;
+  const AddTodo = async (value) => {
+    const todo = { title: value, status: false };
+
+    await fetch(`http://localhost:3000/todos`, {
+      method: `POST`,
+
+      body: JSON.stringify(todo),
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     });
 
-    setTodos([...arr]);
+    getTodos();
   };
 
-  const DeleteTodo = (id) => {
-    const arr = Todos.filter((todo) => todo.id !== id)
+  const DeleteTodo = async (id) => {
+    await fetch(`http://localhost:3000/todos/${id}`, {
+      method: `DELETE`,
 
-    setTodos([...arr]);
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    getTodos();
   };
+
+  const ChangeStatus = async (id, status) => {
+    await fetch(`http://localhost:3000/todos/${id}`, {
+      method: `PATCH`,
+
+      body: JSON.stringify({
+        status: !status,
+      }),
+
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "http://127.0.0.1:5500",
+      },
+    });
+
+    getTodos();
+  };
+
+  const editTodo= async (id)=>{
+    await fetch(`http://localhost:3000/todos/${id}`, {
+      method: `PATCH`,
+
+      body: JSON.stringify({
+        title: id,
+      }),
+
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "http://127.0.0.1:5500",
+      },
+    });
+
+  }
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <div>
