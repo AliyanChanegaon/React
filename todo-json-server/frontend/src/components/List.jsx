@@ -5,7 +5,7 @@ import {Todo} from "./todo";
 
 
 
-export const List = ({data,ChangeStatus, DeleteTodo}) => {
+export const List = ({data,ChangeStatus, DeleteTodo,editTodo}) => {
 
 
 
@@ -13,7 +13,7 @@ export const List = ({data,ChangeStatus, DeleteTodo}) => {
     <div>
       {
         data.map((todo)=>(
-            <Todo data={todo} ChangeStatus={ChangeStatus} DeleteTodo={DeleteTodo} />
+            <Todo data={todo} ChangeStatus={ChangeStatus} DeleteTodo={DeleteTodo} editTodo={editTodo}/>
         ))
       }
     </div>
