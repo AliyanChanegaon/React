@@ -1,0 +1,32 @@
+{
+  "todos": [
+    {
+      "title": "fifiu",
+      "id": 1,
+      "status": false
+    },
+    {
+      "title": "1123",
+      "id": 2,
+      "status": false
+    },
+    {
+      "title": "iufiu",
+      "id": 3
+    },
+    {
+      "title": "uigiu",
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
