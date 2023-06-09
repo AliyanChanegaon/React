@@ -10,8 +10,11 @@ export function getUsers({ page }) {
 export default function User() {
   let [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState({});
+  // IMP if you are on page 2 and after refresh u want to retreive old page
+  // use this property of searchparam.get
+  const initialPage = Number(searchParams.get("page")) || 1;
   const [inputValue, setInputValue] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(initialPage);
   const [text, setText] = useState(searchParams.get("q") || "");
   useEffect(() => {
     getUsers({ page }).then((res) => {
@@ -20,8 +23,8 @@ export default function User() {
     });
   }, [inputValue, page]);
   useEffect(() => {
-    setSearchParams({ q: text });
-  }, [text, setSearchParams]);
+    setSearchParams({ page, q: text });
+  }, [page, text, setSearchParams]);
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -41,6 +44,7 @@ export default function User() {
         </button>
         <button>{page}</button>
         <button
+          disabled={page == 2 ? true : false}
           onClick={() => {
             setPage(page + 1);
           }}
