@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
+function getCurrentPage(value) {
+  value = Number(value);
+  if (typeof value === "number" && value < 0) {
+    value = 1;
+  }
+  if (!value) {
+    value = 1;
+  }
+  return value;
+}
+
 export function getUsers({ page }) {
   return fetch(`https://reqres.in/api/users?page=${page}`).then((res) =>
     res.json()
@@ -12,7 +23,7 @@ export default function User() {
   const [data, setData] = useState({});
   // IMP if you are on page 2 and after refresh u want to retreive old page
   // use this property of searchparam.get
-  const initialPage = Number(searchParams.get("page")) || 1;
+  const initialPage = getCurrentPage(searchParams.get("page"));
   const [inputValue, setInputValue] = useState("");
   const [page, setPage] = useState(initialPage);
   const [text, setText] = useState(searchParams.get("q") || "");
