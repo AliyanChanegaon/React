@@ -4,7 +4,7 @@ import First from "./Component/first";
 import Person from "./Component/Person";
 import Personlist from "./Component/Personlist";
 import Child from "./Component/child";
-// import Loggedin from "./Component/State/useStatte";
+  // NPM Error after installing npm error will be gone
 
 import ReduceFunc from "./Component/State/usereducerr";
 import Button from "./Component/Button";
@@ -49,6 +49,8 @@ export default function App() {
   //   arr1: nameList,
   //   arr2: nameList
   // };
+
+  // NPM Error
 
   return (
     <div className="App">
